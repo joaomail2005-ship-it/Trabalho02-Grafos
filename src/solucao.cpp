@@ -8,3 +8,4 @@ Solucao heuristicaSimples(const Grafo& g) {
     Solucao sol;
     return sol;
 }
+

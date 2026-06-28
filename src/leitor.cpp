@@ -6,13 +6,10 @@
 using namespace std;
 
 Grafo lerArquivoSTP(const string& caminhoArquivo) {
-    Grafo g;
-    g.numNos = 0;
-    g.numArestas = 0;
+    Grafo g; // Inicia um grafo vazio (construtor cuida de numNos = 0)
 
     ifstream arquivo(caminhoArquivo);
     if (!arquivo.is_open()) {
-        // std::endl força a saída imediata na tela sem depender de buffer
         cerr << "Erro critico: Nao foi possivel abrir o arquivo: " << caminhoArquivo << endl;
         return g;
     }
@@ -39,43 +36,43 @@ Grafo lerArquivoSTP(const string& caminhoArquivo) {
             continue;
         }
 
-        // Processa a seção do Grafo de forma robusta
+        // Processa a seção do Grafo
         if (secaoAtual == "Graph" || secaoAtual == "GRAPH" || secaoAtual == "graph") {
             if (token == "Nodes" || token == "NODES" || token == "nodes") {
-                ss >> g.numNos;
-                g.adj.resize(g.numNos + 1);
-                g.premios.assign(g.numNos + 1, 0.0);
+                int n;
+                ss >> n;
+                g.inicializar(n, 0); // Inicializa com N nós
             } 
             else if (token == "Edges" || token == "EDGES" || token == "edges") {
-                ss >> g.numArestas;
+                int m;
+                ss >> m;
+                // Apenas lemos a quantidade declarada, a alocação ocorre ao ler os "E"
             } 
             else if (token == "E" || token == "e") {
                 int u, v;
                 double peso;
                 ss >> u >> v >> peso;
                 
-                // TRAVA DE SEGURANÇA: Evita o crash se os nós não foram inicializados antes
-                if (g.adj.empty() || u >= (int)g.adj.size() || v >= (int)g.adj.size()) {
+                // TRAVA DE SEGURANÇA: Evita o crash se os nós não foram inicializados
+                if (g.getNumNos() == 0 || u > g.getNumNos() || v > g.getNumNos()) {
                     cerr << "[ERRO CRITICO] Tentativa de ler aresta (" << u << " -> " << v 
-                              << ") mas o tamanho do grafo nao foi definido corretamente no arquivo!" << endl;
-                    g.numNos = 0; // força indicar falha
-                    return g;
+                         << ") mas o tamanho do grafo nao foi definido corretamente no arquivo!" << endl;
+                    
+                    Grafo grafoFalho;
+                    return grafoFalho; // força indicar falha retornando grafo zerado
                 }
                 
-                g.adj[u].push_back({v, peso});
-                g.adj[v].push_back({u, peso});
+                g.adicionarAresta(u, v, peso); // Uso do método encapsulado
             }
         } 
-        // Processa a seção de Terminais de forma robusta
+        // Processa a seção de Terminais
         else if (secaoAtual == "Terminals" || secaoAtual == "TERMINALS" || secaoAtual == "terminals") {
             if (token == "TP" || token == "tp") {
                 int no;
                 double premio;
                 ss >> no >> premio;
                 
-                if (!g.premios.empty() && no < (int)g.premios.size()) {
-                    g.premios[no] = premio;
-                }
+                g.setPremio(no, premio); // Uso do método encapsulado
             }
         }
     }
