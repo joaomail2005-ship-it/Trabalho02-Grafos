@@ -20,7 +20,7 @@ Como Compilar
 2. Configure o CMake: `cmake ..`
 3. Compile o projeto: `make` (ou `cmake --build .`)
 
-## 🏃 Como Executar
+## Executar
 
 O programa recebe o caminho do arquivo de instância `.stp` como argumento via linha de comando.
 
