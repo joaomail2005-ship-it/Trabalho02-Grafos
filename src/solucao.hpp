@@ -6,5 +6,6 @@ using namespace std;
 
 // Declaração da nossa função simples de resolução
 Solucao heuristicaSimples(const Grafo& g);
+// Solucao kruskal(); 
 
 #endif // SOLUCAO_HPP
