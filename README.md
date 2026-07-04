@@ -27,3 +27,67 @@ O programa recebe o caminho do arquivo de instância `.stp` como argumento via l
 **No Windows:**
 ```powershell
 .\pcstp_solver.exe ..\instances\NOME_DO_ARQUIVO.stp
+
+#SCRIPT PARA RODAR VARIAS INSTANCIAS E ESCOLHER PASTAS PELO TERMINAL
+# =======================================================
+# SCRIPT DE EXECUÇÃO EM LOTE - PCSTP SOLVER
+# =======================================================
+
+# 1. Caminho do seu executável
+$exe = ".\pcstp_solver.exe"
+
+# 2. Caminho base onde ficam as instâncias
+$pastaBase = "..\instances"
+
+# 3. Nome das subpastas que você quer testar 
+# (Se estiver tudo direto na pasta 'instances', deixe apenas "")
+$subpastas = @("", "grupoB", "grupoC") 
+
+# 4. Quantidade de instâncias para rodar de CADA pasta
+$qtdPorPasta = 5 
+
+# 5. Parâmetros dos Algoritmos
+$alpha = "0.3"
+$iteracoes = "500"
+$tamanhoBloco = "50"
+
+Write-Host "Iniciando a bateria de testes..." -ForegroundColor Green
+
+# Loop pelas subpastas
+foreach ($pasta in $subpastas) {
+    # Monta o caminho da pasta atual
+    $caminhoBusca = Join-Path $pastaBase $pasta
+    
+    # Verifica se a pasta existe antes de tentar ler
+    if (Test-Path $caminhoBusca) {
+        
+        # Pega os arquivos .stp e limita a quantidade definida na variável $qtdPorPasta
+        $instancias = Get-ChildItem -Path $caminhoBusca -Filter "*.stp" | Select-Object -First $qtdPorPasta
+        
+        foreach ($arq in $instancias) {
+            $caminhoStp = $arq.FullName
+            Write-Host "======================================" -ForegroundColor Cyan
+            Write-Host "Testando Instância: $($arq.Name)" -ForegroundColor Yellow
+            Write-Host "======================================" -ForegroundColor Cyan
+            
+            # =======================================================
+            # ESCOLHA QUAL ALGORITMO RODAR
+            # (Descomente removendo o '#' da linha que quer executar)
+            # =======================================================
+            
+            # MODO 1: GULOSO
+            # & $exe $caminhoStp "guloso"
+            
+            # MODO 2: RANDOMIZADO
+            # & $exe $caminhoStp "randomizado" $alpha $iteracoes
+            
+            # MODO 3: REATIVO
+            & $exe $caminhoStp "reativo" $iteracoes $tamanhoBloco
+            
+        }
+    } else {
+        Write-Host "Aviso: Pasta '$caminhoBusca' não encontrada. Pulando..." -ForegroundColor Red
+    }
+}
+
+Write-Host "Bateria de testes finalizada! Verifique o seu 'resultados.csv'." -ForegroundColor Green
