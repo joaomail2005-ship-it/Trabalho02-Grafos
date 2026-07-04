@@ -1,0 +1,16 @@
+Data_Hora,Instancia,Algoritmo,Alpha,Iteracoes,Tamanho_Bloco,Semente,Tempo_s,Melhor_Custo
+2026-07-04 15:28:35,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\C01-A.stp,reativo,0.2,500,50,2180048320,16.2202,88.0000
+2026-07-04 15:28:53,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\C01-B.stp,reativo,0.5,500,50,1299680136,17.1350,118.0000
+2026-07-04 15:29:11,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\C02-A.stp,reativo,0.1,500,50,1353889952,18.2530,153.0000
+2026-07-04 15:29:29,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\C02-B.stp,reativo,0.3,500,50,2519328768,18.0842,191.0000
+2026-07-04 15:29:47,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\C03-A.stp,reativo,0.3,500,50,3535017584,18.2033,700.0000
+2026-07-04 15:31:50,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-JMP\K100.1.stp,reativo,0.3,500,50,335173816,2.1506,307285.0000
+2026-07-04 15:31:52,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-JMP\K100.10.stp,reativo,0.5,500,50,2572026816,2.0748,409388.0000
+2026-07-04 15:31:54,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-JMP\K100.2.stp,reativo,0.4,500,50,447337520,2.2196,280674.0000
+2026-07-04 15:31:57,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-JMP\K100.3.stp,reativo,0.4,500,50,2761281520,2.7913,303351.0000
+2026-07-04 15:32:00,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-JMP\K100.4.stp,reativo,0.2,500,50,1345751224,2.4574,292693.0000
+2026-07-04 15:32:16,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-CRR\C01-A.stp,reativo,0.2,500,50,3886768224,16.6664,88.0000
+2026-07-04 15:32:33,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-CRR\C01-B.stp,reativo,0.4,500,50,3446845040,16.7734,118.0000
+2026-07-04 15:32:50,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-CRR\C02-A.stp,reativo,0.4,500,50,3121684856,16.6858,153.0000
+2026-07-04 15:33:07,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-CRR\C02-B.stp,reativo,0.2,500,50,2724139672,16.3123,191.0000
+2026-07-04 15:33:23,C:\Users\joaom\OneDrive\Documentos\Grafos\Trabalho02_DCC059\instances\PCSPG-CRR\C03-A.stp,reativo,0.4,500,50,1951186488,16.7929,704.0000
