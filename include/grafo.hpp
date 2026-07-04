@@ -24,13 +24,6 @@ public:
     Aresta(int o, int d, double p) : origem(o), destino(d), peso(p) {}
 };
 
-// Estrutura para devolver a resposta do algoritmo
-struct Solucao {
-    vector<int> nosUsados;
-    vector<Aresta> arestasUsadas;
-    double custoTotal = 0.0;
-    double tempo = 0.0;
-};
 
 class Grafo {
 private:

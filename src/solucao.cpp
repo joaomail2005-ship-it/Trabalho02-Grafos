@@ -5,14 +5,16 @@
 #include <queue>
 #include <chrono>
 #include <functional> // Para lambdas recursivos
+#include <random>
 
 using namespace std;
 using namespace std::chrono;
 
-Solucao heuristicaSimples(const Grafo &g)
+Solucao heuristicaSimples(const Grafo &g, int alpha, std::mt19937 &rng)
 {
     // começa a contar o tempo
     auto inicio = high_resolution_clock::now();
+    
     Solucao sol;
 
     int V = g.getNumNos();
@@ -21,6 +23,10 @@ Solucao heuristicaSimples(const Grafo &g)
 
     // kruskal
     vector<Aresta> todas_arestas = g.getArestas();
+    
+    // Vetor para não precisarmos deletar elementos da lista original
+    vector<bool> aresta_usada(todas_arestas.size(), false);
+    int arestas_adicionadas = 0;
 
     // ordena as arestas pelo peso usando uma função lambda
     sort(todas_arestas.begin(), todas_arestas.end(), [](const Aresta &a, const Aresta &b)
@@ -55,26 +61,73 @@ Solucao heuristicaSimples(const Grafo &g)
     vector<vector<Aresta>> mst_adj(V + 1);
     vector<int> grau_mst(V + 1, 0);
     vector<bool> na_arvore(V + 1, false);
-
-    for (const auto &aresta : todas_arestas)
+// Loop principal do Kruskal Randomizado (Baseado em Valor/Limiar)
+    while (arestas_adicionadas < V - 1)
     {
-        if (find(aresta.origem) != find(aresta.destino))
+        double custoMin = -1.0;
+        double custoMax = -1.0;
+
+        // Passo 1: Encontrar CustoMin e CustoMax das arestas que AINDA SAO VALIDAS
+        for (size_t i = 0; i < todas_arestas.size(); ++i)
         {
-            unite(aresta.origem, aresta.destino);
-            mst_arestas.push_back(aresta);
-
-            // Mapeia a adjacência e o grau apenas das arestas que entraram na MST
-            mst_adj[aresta.origem].push_back(aresta);
-            // Cria a aresta de volta, pois o grafo é não-direcionado
-            Aresta inversa(aresta.destino, aresta.origem, aresta.peso);
-            mst_adj[aresta.destino].push_back(inversa);
-
-            grau_mst[aresta.origem]++;
-            grau_mst[aresta.destino]++;
-
-            na_arvore[aresta.origem] = true;
-            na_arvore[aresta.destino] = true;
+            if (!aresta_usada[i])
+            {
+                // Verifica se não forma ciclo
+                if (find(todas_arestas[i].origem) != find(todas_arestas[i].destino))
+                {
+                    if (custoMin < 0) {
+                        custoMin = todas_arestas[i].peso; // A primeira válida é a mínima (pois está ordenado)
+                    }
+                    custoMax = todas_arestas[i].peso; // Continua atualizando, a última será a máxima
+                }
+            }
         }
+
+        // Condição de parada: não há mais arestas válidas (grafo desconexo)
+        if (custoMin < 0) break; 
+
+        // Passo 2: Calcular o Limiar de Custo
+        double limiar = custoMin + alpha * (custoMax - custoMin);
+
+        // Passo 3: Preencher a RCL com todas as arestas válidas <= Limiar
+        vector<int> rcl_indices;
+        for (size_t i = 0; i < todas_arestas.size(); ++i)
+        {
+            if (!aresta_usada[i])
+            {
+                // Como o vetor está ordenado, se o peso passar do limiar, podemos parar de procurar
+                if (todas_arestas[i].peso > limiar) break; 
+
+                if (find(todas_arestas[i].origem) != find(todas_arestas[i].destino))
+                {
+                    rcl_indices.push_back(i);
+                }
+            }
+        }
+
+        // Passo 4: Sorteia uma das opções na RCL
+        uniform_int_distribution<int> dist(0, rcl_indices.size() - 1);
+        int indice_escolhido = rcl_indices[dist(rng)];
+        
+        // Marca a aresta como usada
+        aresta_usada[indice_escolhido] = true;
+        Aresta aresta = todas_arestas[indice_escolhido];
+
+        // Processo padrão de união (sem alterações)
+        unite(aresta.origem, aresta.destino);
+        mst_arestas.push_back(aresta);
+
+        mst_adj[aresta.origem].push_back(aresta);
+        Aresta inversa(aresta.destino, aresta.origem, aresta.peso);
+        mst_adj[aresta.destino].push_back(inversa);
+
+        grau_mst[aresta.origem]++;
+        grau_mst[aresta.destino]++;
+
+        na_arvore[aresta.origem] = true;
+        na_arvore[aresta.destino] = true;
+
+        arestas_adicionadas++;
     }
 
 
