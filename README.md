@@ -27,3 +27,6 @@ O programa recebe o caminho do arquivo de instância `.stp` como argumento via l
 **No Windows:**
 ```powershell
 .\pcstp_solver.exe ..\instances\NOME_DO_ARQUIVO.stp
+
+**SCRIPT PARA RODAR VARIAS INSTANCIAS E ESCOLHER PASTAS PELO TERMINAL**
+.\rodar_testes.ps1
