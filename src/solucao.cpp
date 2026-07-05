@@ -10,7 +10,7 @@
 using namespace std;
 using namespace std::chrono;
 
-Solucao heuristicaSimples(const Grafo &g, int alpha, std::mt19937 &rng)
+Solucao heuristicaSimples(const Grafo &g, double alpha, std::mt19937 &rng)
 {
     // começa a contar o tempo
     auto inicio = high_resolution_clock::now();
