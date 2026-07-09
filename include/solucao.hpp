@@ -13,7 +13,7 @@ struct Solucao {
     double tempo = 0.0;
 };
 // Declaração da nossa função simples de resolução
-Solucao heuristicaSimples(const Grafo& g,int alpha,std::mt19937 &rng);
+Solucao heuristicaSimples(const Grafo& g, double alpha, std::mt19937 &rng);
 // Solucao kruskal(); 
 
 #endif // SOLUCAO_HPP

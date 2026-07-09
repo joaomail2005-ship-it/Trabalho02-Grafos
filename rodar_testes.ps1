@@ -8,7 +8,7 @@ $pastaBase = ".\instances"
 
 $subpastas = @("PCSPG-JMP", "PCSPG-CRR") 
 
-$qtdPorPasta = 5 
+$qtdPorPasta = 15 
 
 $alpha = "0.3"
 $iteracoes = "500"
